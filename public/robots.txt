@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Keep the staff workspace out of search results.
+Disallow: /admin
+
+Sitemap: https://ehikings.vercel.app/sitemap.xml

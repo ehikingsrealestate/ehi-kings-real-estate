@@ -1,0 +1,7 @@
+.env
+.env.local
+.env*.local
+images/
+version 1/
+FOR WEB CONTENT/
+FOR WEB CONTENT-*.zip

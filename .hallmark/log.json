@@ -1,0 +1,46 @@
+[
+  {
+    "date": "2026-06-25",
+    "scope": "admin-panel",
+    "genre": "company operations workspace",
+    "macrostructure": "Full-Screen Chat / Mail / Team Chat / Site Editor",
+    "theme": "custom",
+    "theme_axes": "dark / flat / cool-blue",
+    "enrichment": "working action strips, desktop context panes, reduced rounded containers",
+    "design_system": "minimalist-ui + frontend-design",
+    "brief": "Refocus admin on functional full-screen company tools and remove excessive boxed surfaces"
+  },
+  {
+    "date": "2026-06-25",
+    "scope": "public-site",
+    "genre": "truthful luxury real estate",
+    "macrostructure": "Full-Bleed Statement / Filtered Portfolio / Working Journal",
+    "theme": "custom",
+    "theme_axes": "white / dark-liquid-glass / cool-blue",
+    "enrichment": "motion-primitives reveal, fixed glass nav, photorealistic landscape media",
+    "design_system": "taste-skill + hallmark + motion-primitives reference",
+    "brief": "Apply the real-estate reference UI as a skin while preserving site bones and keeping admin separate"
+  },
+  {
+    "date": "2026-06-24",
+    "scope": "public-home",
+    "genre": "luxury real estate",
+    "macrostructure": "Marquee Hero / Property Carousel / Photographic Catalogue",
+    "theme": "custom",
+    "theme_axes": "light / geometric-sans / cool-blue",
+    "enrichment": "photorealistic property imagery",
+    "design_system": "taste-skill + hallmark",
+    "brief": "Correct main website to mimic rounded cinematic real-estate reference video"
+  },
+  {
+    "date": "2026-06-22",
+    "scope": "app",
+    "genre": "editorial",
+    "macrostructure": "Photographic / Long Document / Catalogue / Index-First",
+    "theme": "custom",
+    "theme_axes": "dark / classical-serif / warm-gold",
+    "enrichment": "none (real photography)",
+    "design_system": "design.md",
+    "brief": "Ehi-Kings · multi-page luxury real estate + construction site"
+  }
+]

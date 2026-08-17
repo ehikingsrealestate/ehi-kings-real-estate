@@ -1,0 +1,24 @@
+/* Hallmark · portable tokens — Ehi-Kings luxury editorial system
+ * Primary base kept; accents are luxury green + blue (homage to ehikings.com). */
+:root {
+  --color-bg:         oklch(0.16 0.008 75);
+  --color-surface:    oklch(0.21 0.009 75);
+  --color-primary:    oklch(0.95 0.008 85);
+  --color-muted:      oklch(0.70 0.010 82);
+  --color-rule:       oklch(0.34 0.010 78);
+  --color-accent:     oklch(0.68 0.115 162);  /* luxury green — primary accent */
+  --color-accent-2:   oklch(0.62 0.130 245);  /* luxury blue — secondary accent */
+  --color-accent-ink: oklch(0.17 0.020 162);
+  --color-focus:      oklch(0.76 0.130 162);
+
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    "Roboto", ui-sans-serif, system-ui, sans-serif;
+
+  --space-3xs: 0.25rem; --space-2xs: 0.5rem; --space-xs: 0.75rem;
+  --space-sm:  1rem;    --space-md:  1.5rem; --space-lg: 2rem;
+  --space-xl:  3rem;    --space-2xl: 4.5rem; --space-3xl: 7rem;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short:   220ms;
+}

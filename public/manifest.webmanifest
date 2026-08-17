@@ -1,0 +1,23 @@
+{
+  "name": "Ehi-Kings Real Estate and Construction",
+  "short_name": "Ehi-Kings",
+  "description": "Ehi-Kings public property portfolio and staff workspace.",
+  "id": "/admin",
+  "start_url": "/admin",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#144687",
+  "theme_color": "#144687",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Properties", "url": "/properties" },
+    { "name": "Contact", "url": "/contact" },
+    { "name": "Admin", "url": "/admin" }
+  ]
+}

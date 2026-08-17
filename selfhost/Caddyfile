@@ -1,0 +1,84 @@
+# Ehi-Kings VPS reverse proxy (lean) — free HTTPS via sslip.io.
+# Only n8n (automations) and PicoClaw (assistant) remain after decommissioning
+# the redundant app suite. Old engine-named hosts still 301 for any stale links.
+
+{
+	email info@ehikings.com
+}
+
+(embeddable) {
+	header {
+		-X-Frame-Options
+		Content-Security-Policy "frame-ancestors 'self' https://*.vercel.app https://ehikings.com https://*.ehikings.com http://localhost:* https://localhost:*"
+	}
+}
+
+(sso) {
+	handle /ek-sso* {
+		reverse_proxy ek-sso:8099
+	}
+}
+
+automations.207-180-245-46.sslip.io {
+	import embeddable
+	import sso
+	reverse_proxy n8n:5678 {
+		header_down -X-Frame-Options
+	}
+}
+
+scheduling.207-180-245-46.sslip.io {
+	import embeddable
+	reverse_proxy cal:3000 {
+		header_down -X-Frame-Options
+	}
+}
+
+assistant.207-180-245-46.sslip.io {
+	import embeddable
+	reverse_proxy picoclaw:18800 {
+		header_down -X-Frame-Options
+	}
+}
+
+# OpenCloud — company file cloud (Drive). Big uploads → generous body limit.
+cloud.207-180-245-46.sslip.io {
+	import embeddable
+	reverse_proxy opencloud:9200 {
+		header_down -X-Frame-Options
+	}
+	request_body {
+		max_size 10GB
+	}
+}
+
+# Docmost — team docs / wiki.
+docs.207-180-245-46.sslip.io {
+	import embeddable
+	reverse_proxy docmost:3000 {
+		header_down -X-Frame-Options
+	}
+}
+
+# Ente — photos web app.
+photos.207-180-245-46.sslip.io {
+	reverse_proxy ente-web:3000
+}
+
+# Ente — museum API (the web app + mobile clients talk to this).
+photos-api.207-180-245-46.sslip.io {
+	reverse_proxy ente-museum:8080
+	request_body {
+		max_size 10GB
+	}
+}
+
+# Ente — public shared albums.
+albums.207-180-245-46.sslip.io {
+	reverse_proxy ente-web:3002
+}
+
+# Legacy hosts → redirect to the automations host (apps decommissioned).
+n8n.207-180-245-46.sslip.io {
+	redir https://automations.207-180-245-46.sslip.io{uri} permanent
+}

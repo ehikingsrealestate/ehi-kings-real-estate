@@ -1,0 +1,256 @@
+# Ehi-Kings self-hosted stack (lean) — the redundant app suite (Chatwoot,
+# Twenty, listmonk, Postiz) was decommissioned once those features were
+# rebuilt natively inside the admin. What remains:
+#   n8n       — automation engine, connected to the whole company (the Automations tab)
+#   Cal.com   — self-hosted scheduling (re-added for website inspection bookings;
+#               the site embeds https://scheduling.207-180-245-46.sslip.io)
+#   PicoClaw  — self-hosted AI assistant (admin-only)
+#   ek-sso    — one-click signed-in gateway
+#   caddy     — HTTPS reverse proxy
+#
+#   docker compose -f selfhost/docker-compose.yml up -d
+
+services:
+  # ── Cal.com — self-hosted scheduling (Calendly alternative) ──────────────────
+  cal-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cal
+      POSTGRES_PASSWORD: "${CAL_PW}"
+      POSTGRES_DB: cal
+    volumes:
+      - cal-db-data:/var/lib/postgresql/data
+    mem_limit: 512m
+
+  cal:
+    image: calcom/cal.com:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3000"
+    environment:
+      NEXT_PUBLIC_WEBAPP_URL: "https://scheduling.207-180-245-46.sslip.io"
+      NEXTAUTH_URL: "https://scheduling.207-180-245-46.sslip.io"
+      NEXTAUTH_SECRET: "${CAL_NEXTAUTH_SECRET}"
+      CALENDSO_ENCRYPTION_KEY: "${CAL_ENCRYPTION_KEY}"
+      DATABASE_URL: "postgresql://cal:${CAL_PW}@cal-db:5432/cal"
+      DATABASE_DIRECT_URL: "postgresql://cal:${CAL_PW}@cal-db:5432/cal"
+      NEXT_PUBLIC_LICENSE_CONSENT: "agree"
+      CALCOM_TELEMETRY_DISABLED: "1"
+    depends_on:
+      - cal-db
+    mem_limit: 2048m
+    cpus: 2.0
+  # ── n8n — company automation engine ─────────────────────────────────────────
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      N8N_SECURE_COOKIE: "false"
+      GENERIC_TIMEZONE: Africa/Lagos
+      N8N_HOST: automations.207-180-245-46.sslip.io
+      N8N_EDITOR_BASE_URL: "https://automations.207-180-245-46.sslip.io"
+      WEBHOOK_URL: "https://automations.207-180-245-46.sslip.io"
+      # Templates ON so staff can import the curated real-estate workflows.
+      N8N_TEMPLATES_ENABLED: "true"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_HIRING_BANNER_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+      # Company context available to workflows (Convex HTTP endpoint, etc.).
+      EHIKINGS_CONVEX_SITE: "https://third-tern-430.convex.site"
+    volumes:
+      - n8n-data:/home/node/.n8n
+    mem_limit: 1024m
+    cpus: 1.5
+
+  # ── PicoClaw — self-hosted AI assistant (admin-only) ─────────────────────────
+  picoclaw:
+    image: docker.io/sipeed/picoclaw:launcher
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18800:18800"
+    environment:
+      PICOCLAW_GATEWAY_HOST: "0.0.0.0"
+      PICOCLAW_LAUNCHER_TOKEN: "${PICOCLAW_TOKEN}"
+    volumes:
+      - picoclaw-data:/root/.picoclaw
+    mem_limit: 768m
+    cpus: 1.0
+    pids_limit: 256
+    tmpfs:
+      - /tmp:size=128m
+
+  # ── Ehi-Kings SSO gateway — one-click signed-in into n8n ─────────────────────
+  ek-sso:
+    build: ./ek-sso
+    restart: unless-stopped
+    environment:
+      EK_SSO_SECRET: "${EK_SSO_SECRET}"
+      N8N_OWNER_EMAIL: "info@ehikings.com"
+      N8N_OWNER_PASSWORD: "EhiKings2026!n8n"
+
+  # ── OpenCloud — self-hosted company file cloud (cloud.…) ─────────────────────
+  opencloud:
+    image: opencloudeu/opencloud:latest
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["opencloud init || true; opencloud server"]
+    environment:
+      OC_URL: "https://cloud.207-180-245-46.sslip.io"
+      OC_INSECURE: "true"
+      PROXY_TLS: "false"
+      PROXY_HTTP_ADDR: "0.0.0.0:9200"
+      OC_LOG_LEVEL: "warn"
+      OC_LOG_COLOR: "false"
+      IDM_ADMIN_PASSWORD: "${OC_ADMIN_PASSWORD}"
+      # Allow the desktop/mobile clients + first-run onboarding.
+      PROXY_ENABLE_BASIC_AUTH: "true"
+      # ── Zoho "Login with Zoho" SSO (external OIDC, auto-provision) ──
+      OC_OIDC_ISSUER: "https://accounts.zoho.com"
+      WEB_OIDC_CLIENT_ID: "${ZOHO_CLIENT_ID}"
+      WEB_OIDC_METADATA_URL: "https://accounts.zoho.com/.well-known/openid-configuration"
+      PROXY_OIDC_ISSUER: "https://accounts.zoho.com"
+      PROXY_OIDC_REWRITE_WELLKNOWN: "true"
+      PROXY_AUTOPROVISION_ACCOUNTS: "true"
+      PROXY_USER_OIDC_CLAIM: "email"
+      PROXY_USER_CS3_CLAIM: "username"
+      PROXY_ACCESS_TOKEN_VERIFY_METHOD: "none"
+      OC_EXCLUDE_RUN_SERVICES: "idp"
+    volumes:
+      - opencloud-config:/etc/opencloud
+      - opencloud-data:/var/lib/opencloud
+    mem_limit: 1536m
+
+  # ── Docmost — self-hosted team docs / wiki (docs.…) ──────────────────────────
+  docmost:
+    image: docmost/docmost:latest
+    restart: unless-stopped
+    depends_on:
+      - docmost-db
+      - docmost-redis
+    environment:
+      APP_URL: "https://docs.207-180-245-46.sslip.io"
+      APP_SECRET: "${DOCMOST_SECRET}"
+      DATABASE_URL: "postgresql://docmost:${DOCMOST_DB_PW}@docmost-db:5432/docmost?schema=public"
+      REDIS_URL: "redis://docmost-redis:6379"
+    volumes:
+      - docmost-data:/app/data/storage
+    mem_limit: 1024m
+
+  docmost-db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: docmost
+      POSTGRES_USER: docmost
+      POSTGRES_PASSWORD: "${DOCMOST_DB_PW}"
+    volumes:
+      - docmost-db-data:/var/lib/postgresql
+    mem_limit: 512m
+
+  docmost-redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    volumes:
+      - docmost-redis-data:/data
+    mem_limit: 256m
+
+  # ── Ente — E2E-encrypted photos & 2FA (photos.… / photos-api.…) ──────────────
+  ente-museum:
+    image: ghcr.io/ente/server
+    restart: unless-stopped
+    depends_on:
+      ente-db:
+        condition: service_healthy
+    volumes:
+      - ./ente/museum.yaml:/museum.yaml:ro
+      - ente-museum-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/ping"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    mem_limit: 1024m
+
+  # Resolves localhost:3200 inside the museum container to the minio container.
+  ente-socat:
+    image: alpine/socat
+    restart: unless-stopped
+    network_mode: "service:ente-museum"
+    depends_on: [ente-museum]
+    command: "TCP-LISTEN:3200,fork,reuseaddr TCP:ente-minio:3200"
+
+  ente-web:
+    image: ghcr.io/ente/web
+    restart: unless-stopped
+    environment:
+      ENTE_API_ORIGIN: "https://photos-api.207-180-245-46.sslip.io"
+    mem_limit: 512m
+
+  ente-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: "${ENTE_PG_PW}"
+      POSTGRES_DB: ente_db
+    healthcheck:
+      test: pg_isready -q -d ente_db -U pguser
+      start_period: 40s
+      start_interval: 1s
+    volumes:
+      - ente-db-data:/var/lib/postgresql/data
+    mem_limit: 512m
+
+  ente-minio:
+    image: minio/minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: "${ENTE_MINIO_USER}"
+      MINIO_ROOT_PASSWORD: "${ENTE_MINIO_PW}"
+    command: server /data --address ":3200" --console-address ":3201"
+    volumes:
+      - ente-minio-data:/data
+    post_start:
+      - command: |
+          sh -c '
+          while ! mc alias set h0 http://ente-minio:3200 "${ENTE_MINIO_USER}" "${ENTE_MINIO_PW}" 2>/dev/null
+          do echo "Waiting for minio..."; sleep 0.5; done
+          cd /data
+          mc mb -p b2-eu-cen
+          mc mb -p wasabi-eu-central-2-v3
+          mc mb -p scw-eu-fr-v3
+          '
+    mem_limit: 512m
+
+  # ── Caddy — HTTPS reverse proxy ──────────────────────────────────────────────
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  cal-db-data:
+  n8n-data:
+  picoclaw-data:
+  caddy-data:
+  caddy-config:
+  opencloud-config:
+  opencloud-data:
+  docmost-data:
+  docmost-db-data:
+  docmost-redis-data:
+  ente-museum-data:
+  ente-db-data:
+  ente-minio-data:
