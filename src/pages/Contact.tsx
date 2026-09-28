@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { useMutation } from 'convex/react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowUpRight, CalendarCheck, Check, CreditCard, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, CalendarCheck, Check, CreditCard, Mail, MapPin, MessageSquare, Phone, ShieldCheck } from 'lucide-react';
 import { api } from '../../convex/_generated/api';
 import { COMPANY } from '../data/site';
 import Seo from '../components/Seo';
@@ -69,7 +69,7 @@ export default function Contact() {
     <div className="px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32 md:px-10 md:pb-24 md:pt-40">
       <Seo
         title="Contact Ehi-Kings — Talk to a Senior Property Agent"
-        description="Tell Ehi-Kings what you're looking for. A senior agent replies within 2 days with availability, pricing, and the next inspection date in Lagos."
+        description="Tell Ehi-Kings what you're looking for. Connect directly via WhatsApp (+234 810 922 7485), Customer Care (+234 906 115 4872), or Marketing & Sales (+234 907 376 5081)."
         path="/contact"
       />
       <div className="mx-auto max-w-6xl">
@@ -86,22 +86,76 @@ export default function Contact() {
               className="max-w-lg font-heading text-[2.5rem] font-light leading-[1.05] tracking-normal sm:text-5xl md:text-6xl"
             />
             <p className="mt-6 max-w-md leading-relaxed text-muted">
-              A senior agent will get back to you with availability, pricing, and the
-              next inspection date within 2 days.
+              Connect directly with our dedicated teams across WhatsApp, Customer Care, and Sales for prompt assistance.
             </p>
 
-            <div className="mt-10 space-y-5 text-primary/90">
-              <a href={`mailto:${COMPANY.email}`} className="flex min-h-11 items-center gap-4 transition-colors hover:text-accent-2">
-                <Mail className="h-5 w-5 text-accent-2" /> {COMPANY.email}
-              </a>
-              {COMPANY.phones.map((p) => (
-                <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="flex min-h-11 items-center gap-4 tnum transition-colors hover:text-accent">
-                  <Phone className="h-5 w-5 text-accent" /> {p}
+            <div className="mt-8 space-y-4">
+              {/* Direct Designated Contact Channels */}
+              <div className="flex flex-col gap-3">
+                {COMPANY.contactChannels.map((c) => (
+                  <a
+                    key={c.number}
+                    href={c.href}
+                    target={c.type === 'whatsapp' ? '_blank' : undefined}
+                    rel={c.type === 'whatsapp' ? 'noopener noreferrer' : undefined}
+                    className={`group flex items-center justify-between rounded-2xl border p-4 transition-all duration-300 hover:shadow-md ${
+                      c.type === 'whatsapp'
+                        ? 'border-emerald-500/30 bg-emerald-500/5 hover:border-emerald-500/60'
+                        : c.type === 'care'
+                        ? 'border-accent/30 bg-accent/5 hover:border-accent/60'
+                        : 'border-accent-2/30 bg-accent-2/5 hover:border-accent-2/60'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
+                          c.type === 'whatsapp'
+                            ? 'bg-emerald-500 text-white shadow-sm'
+                            : c.type === 'care'
+                            ? 'bg-accent text-accent-ink shadow-sm'
+                            : 'bg-accent-2 text-accent-2-ink shadow-sm'
+                        }`}
+                      >
+                        {c.type === 'whatsapp' ? <MessageSquare className="h-5 w-5" /> : <Phone className="h-5 w-5" />}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                            {c.department}
+                          </span>
+                          {c.type === 'whatsapp' && (
+                            <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[0.65rem] font-bold uppercase text-emerald-700">
+                              Instant Chat
+                            </span>
+                          )}
+                        </div>
+                        <p className="font-heading text-base font-medium tabular-nums text-primary group-hover:text-accent">
+                          {c.number}
+                        </p>
+                        <p className="text-[0.75rem] text-muted">{c.description}</p>
+                      </div>
+                    </div>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                  </a>
+                ))}
+              </div>
+
+              <div className="pt-2 space-y-3 text-sm text-primary/90">
+                <a href={`mailto:${COMPANY.email}`} className="flex min-h-11 items-center gap-3.5 rounded-xl p-2 transition-colors hover:text-accent-2">
+                  <Mail className="h-5 w-5 text-accent-2" />
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-muted block">Official Email</span>
+                    <span>{COMPANY.email}</span>
+                  </div>
                 </a>
-              ))}
-              <p className="flex max-w-sm items-start gap-4 leading-relaxed">
-                <MapPin className="mt-1 h-5 w-5 shrink-0 text-accent-2" /> {COMPANY.address}
-              </p>
+                <div className="flex items-start gap-3.5 rounded-xl p-2">
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-accent-2" />
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-muted block">Head Office Address</span>
+                    <span className="text-muted leading-relaxed">{COMPANY.address}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

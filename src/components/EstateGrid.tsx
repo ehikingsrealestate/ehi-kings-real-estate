@@ -31,14 +31,26 @@ export default function EstateGrid({ estates }: { estates: Estate[] }) {
             >
               <img
                 src={estateMedia(estate)}
-                alt={estate.img ? estate.name : `Representative ${estate.kind === 'land' ? 'land' : 'home'} photography for ${estate.name}`}
+                alt={estate.name}
                 loading="lazy"
-                className="h-full w-full object-cover transition duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
+                className="h-full w-full object-cover object-top transition duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/4 to-black/8" />
-              <span className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-xl sm:left-4 sm:top-4">
-                {estate.kind === 'land' ? 'Land' : 'Home'}
-              </span>
+              <div className="absolute left-3 top-3 flex items-center gap-1.5 sm:left-4 sm:top-4">
+                <span className="rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-xl">
+                  {estate.kind === 'land' ? 'Land' : 'Home'}
+                </span>
+                {estate.soldOut && (
+                  <span className="rounded-full border border-red-500/30 bg-red-600/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg backdrop-blur-xl">
+                    Sold Out
+                  </span>
+                )}
+                {!estate.soldOut && estate.almostSoldOut && (
+                  <span className="rounded-full border border-amber-500/30 bg-amber-500/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg backdrop-blur-xl">
+                    Almost Sold Out
+                  </span>
+                )}
+              </div>
               <span className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-primary transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-white sm:right-4 sm:top-4">
                 <ArrowUpRight className="h-4 w-4" />
               </span>

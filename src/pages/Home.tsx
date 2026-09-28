@@ -39,8 +39,8 @@ export default function Home() {
     .map((section) => section.trim())
     .filter(Boolean);
   const showSection = (name: string) => sectionOrder.includes(name);
-  const featured = estates.filter((estate) => estate.img || estate.kind === 'home').slice(0, featuredCount);
-  const fallbackFeatured = featured.length >= 3 ? featured : estates.slice(0, 4);
+  const featured = estates.filter((estate) => !estate.soldOut && estate.img).slice(0, featuredCount || 6);
+  const fallbackFeatured = featured.length >= 3 ? featured : estates.slice(0, 6);
   const ledeTitle = site.get('home.lede.title', 'Real estate, construction, and accountable guidance.');
   const ledeBody = site.get('home.lede.body', COMPANY.philosophy);
   const missionSummary = 'We turn land and housing goals into documented next steps.';

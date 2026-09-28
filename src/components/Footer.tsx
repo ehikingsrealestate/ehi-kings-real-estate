@@ -2,7 +2,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import { useMutation } from 'convex/react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { ArrowRight, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react';
 import { api } from '../../convex/_generated/api';
 import { COMPANY, NAV } from '../data/site';
 import { useSiteBlocks } from '../data/useSiteBlocks';
@@ -123,19 +123,50 @@ export default function Footer() {
               </span>
             </Link>
 
-            <div className="mt-8 space-y-4 text-sm text-muted">
+            <div className="mt-8 space-y-3.5 text-sm text-muted">
               <p className="flex gap-3 leading-6">
                 <MapPin className="mt-1 h-4 w-4 shrink-0 text-muted" />
                 {COMPANY.address}
               </p>
-              <p className="flex items-center gap-3 tabular-nums">
-                <Phone className="h-4 w-4 shrink-0 text-muted" />
-                {COMPANY.phones[0]}
-              </p>
-              <p className="flex items-center gap-3">
+              <a
+                href={COMPANY.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 transition-colors hover:text-emerald-600"
+              >
+                <MessageSquare className="h-4 w-4 shrink-0 text-emerald-600" />
+                <span>
+                  <span className="text-xs font-semibold text-primary">WhatsApp: </span>
+                  <span className="tabular-nums">{COMPANY.whatsapp}</span>
+                </span>
+              </a>
+              <a
+                href={`tel:${COMPANY.customerCare.replace(/\s/g, '')}`}
+                className="flex items-center gap-3 transition-colors hover:text-accent"
+              >
+                <Phone className="h-4 w-4 shrink-0 text-accent" />
+                <span>
+                  <span className="text-xs font-semibold text-primary">Customer Care: </span>
+                  <span className="tabular-nums">{COMPANY.customerCare}</span>
+                </span>
+              </a>
+              <a
+                href={`tel:${COMPANY.marketingSales.replace(/\s/g, '')}`}
+                className="flex items-center gap-3 transition-colors hover:text-accent-2"
+              >
+                <Phone className="h-4 w-4 shrink-0 text-accent-2" />
+                <span>
+                  <span className="text-xs font-semibold text-primary">Marketing & Sales: </span>
+                  <span className="tabular-nums">{COMPANY.marketingSales}</span>
+                </span>
+              </a>
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="flex items-center gap-3 transition-colors hover:text-accent-2"
+              >
                 <Mail className="h-4 w-4 shrink-0 text-muted" />
-                {COMPANY.email}
-              </p>
+                <span>{COMPANY.email}</span>
+              </a>
             </div>
 
             <form className="mt-8" onSubmit={subscribe}>

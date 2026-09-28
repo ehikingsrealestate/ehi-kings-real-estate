@@ -6,6 +6,7 @@ import GrowRule from '../components/fx/GrowRule';
 import LeadershipCarousel from '../components/fx/LeadershipCarousel';
 import FaqAccordion from '../components/fx/FaqAccordion';
 import RiveSlot from '../components/fx/RiveSlot';
+import RealtorIncentives from '../components/RealtorIncentives';
 
 const FAQ_ITEMS = [
   {
@@ -127,6 +128,13 @@ export default function About() {
           />
           <LeadershipCarousel />
         </div>
+      </section>
+
+      {/* Realtor Partner Program & 2026 Incentive Package */}
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 md:px-10">
+        <Reveal>
+          <RealtorIncentives />
+        </Reveal>
       </section>
 
       {/* FAQ */}

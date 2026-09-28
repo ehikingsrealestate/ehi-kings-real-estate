@@ -12,7 +12,7 @@ const starters = [
   'Office address',
 ];
 
-const fallbackReply = `The website assistant is not fully connected yet. You can still reach Ehi-Kings on ${COMPANY.phones[0]} or ${COMPANY.email}.`;
+const fallbackReply = `You can reach Ehi-Kings directly via WhatsApp at ${COMPANY.whatsapp}, Customer Care at ${COMPANY.customerCare}, or Marketing & Sales at ${COMPANY.marketingSales} (Email: ${COMPANY.email}).`;
 
 export default function PublicChatbot() {
   const ask = useAction(api.assistant.publicAsk);

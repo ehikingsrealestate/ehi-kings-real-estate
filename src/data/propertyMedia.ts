@@ -1,4 +1,5 @@
 import type { Estate } from './site';
+import { brochureFor } from './media';
 
 const representativeMedia = {
   land: [
@@ -19,22 +20,17 @@ const representativeMedia = {
   ],
 };
 
-const legacyFlyerImages = new Set([
-  '/estates/grace-apartments-lekki.jpg',
-  '/estates/grace-life-garden-estate.jpg',
-  '/estates/perfect-garden-estate-epe.jpg',
-  '/estates/shalom-garden-city-benin.jpg',
-  '/estates/charis-garden-estate.jpg',
-]);
-
 function slugIndex(slug: string, length: number) {
   const total = slug.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
   return total % length;
 }
 
 export function estateMedia(estate: Estate, width = 1400) {
-  if (estate.img && !legacyFlyerImages.has(estate.img)) return estate.img;
+  if (estate.img) return estate.img;
+  const flyer = brochureFor(estate.slug);
+  if (flyer) return flyer;
   const choices = representativeMedia[estate.kind];
   const url = choices[slugIndex(estate.slug, choices.length)];
   return url.replace(/w=\d+/, `w=${width}`);
 }
+
