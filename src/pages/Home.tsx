@@ -7,6 +7,7 @@ import { useSiteBlocks } from '../data/useSiteBlocks';
 import EstateGrid from '../components/EstateGrid';
 import Testimonials from '../components/Testimonials';
 import Audacious3DScroll from '../components/hero3d/Audacious3DScroll';
+import MdBirthdayPromo from '../components/MdBirthdayPromo';
 import { Reveal, smoothEase } from '../components/MotionPrimitives';
 import Seo from '../components/Seo';
 import BlurText from '../components/reactbits/BlurText';
@@ -95,6 +96,9 @@ export default function Home() {
           </div>
         </motion.div>
       </Audacious3DScroll>
+
+      {/* MD's Birthday Special Promo Campaign */}
+      <MdBirthdayPromo />
 
       {showSection('lede') && <section className="px-4 py-20 sm:px-6 sm:py-24 md:px-10 md:py-28 lg:px-14">
         <Reveal>
