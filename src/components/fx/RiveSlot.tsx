@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import Rive from '@rive-app/react-canvas';
+import { lazy, Suspense, useEffect, useState } from 'react';
 
-// Rive animation slot (rive-app/rive-react). Renders only if the .riv asset
-// actually exists, so it can be wired up before the animation file lands —
-// drop a file in public/rive/ and it appears.
+// Dynamically import Rive so the large WebAssembly runtime is only loaded
+// when a real .riv animation is confirmed to exist.
+const Rive = lazy(() => import('@rive-app/react-canvas'));
 
 interface RiveSlotProps {
   src: string;
@@ -29,7 +28,9 @@ export default function RiveSlot({ src, className = '' }: RiveSlotProps) {
   if (!available) return null;
   return (
     <div className={className} aria-hidden>
-      <Rive src={src} />
+      <Suspense fallback={null}>
+        <Rive src={src} />
+      </Suspense>
     </div>
   );
 }

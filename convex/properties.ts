@@ -33,8 +33,49 @@ function requireAdmin(role: string) {
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    const rows = await ctx.db.query("properties").collect();
-    return rows.filter((p) => p.active).sort((a, b) => a.order - b.order);
+    const rows = await ctx.db
+      .query("properties")
+      .withIndex("by_active", (q) => q.eq("active", true))
+      .collect();
+    return rows.sort((a, b) => a.order - b.order);
+  },
+});
+
+// PUBLIC LIGHTWEIGHT — returns summary fields only for cards and landing pages.
+export const listSummaries = query({
+  args: {},
+  handler: async (ctx) => {
+    const rows = await ctx.db
+      .query("properties")
+      .withIndex("by_active", (q) => q.eq("active", true))
+      .collect();
+    return rows
+      .sort((a, b) => a.order - b.order)
+      .map((p) => ({
+        slug: p.slug,
+        name: p.name,
+        location: p.location,
+        region: p.region,
+        kind: p.kind,
+        title: p.title,
+        size: p.size,
+        price: p.price,
+        note: p.note,
+        img: p.img,
+        featured: p.featured,
+        order: p.order,
+      }));
+  },
+});
+
+// PUBLIC — Fetch single property by slug with fast index lookup
+export const getBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, { slug }) => {
+    return await ctx.db
+      .query("properties")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .unique();
   },
 });
 

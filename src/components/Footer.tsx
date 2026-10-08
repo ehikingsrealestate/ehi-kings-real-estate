@@ -183,8 +183,8 @@ export default function Footer() {
                 <button
                   ref={sendButtonRef}
                   type="submit"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-accent"
-                  aria-label="Subscribe"
+                  className="flex h-12 w-12 min-h-[48px] min-w-[48px] shrink-0 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-accent active:scale-95"
+                  aria-label="Subscribe to newsletter"
                 >
                   <Send className="h-4 w-4" />
                 </button>

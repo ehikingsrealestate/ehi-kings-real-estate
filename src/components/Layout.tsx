@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useLocation, useOutlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import Nav from './Nav';
 import Footer from './Footer';
-import ChatWidget from './ChatWidget';
-import ClickSpark from './reactbits/ClickSpark';
 import LenisProvider from './fx/LenisProvider';
 import ScrollProgress from './fx/ScrollProgress';
 import BackToTop from './fx/BackToTop';
 import { CONVEX_ENABLED } from '../admin/convexClient';
 import CustomerProvider from '../customer/CustomerProvider';
+
+const ChatWidget = lazy(() => import('./ChatWidget'));
+const ClickSpark = lazy(() => import('./reactbits/ClickSpark'));
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -41,9 +42,15 @@ export default function Layout() {
           </AnimatePresence>
         </main>
         <Footer />
-        <ClickSpark sparkColor="#d9a94f" />
+        <Suspense fallback={null}>
+          <ClickSpark sparkColor="#d9a94f" />
+        </Suspense>
         <BackToTop />
-        {CONVEX_ENABLED && <ChatWidget />}
+        {CONVEX_ENABLED && (
+          <Suspense fallback={null}>
+            <ChatWidget />
+          </Suspense>
+        )}
       </div>
     </CustomerProvider>
   );

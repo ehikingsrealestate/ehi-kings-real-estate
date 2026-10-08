@@ -21,6 +21,7 @@ import { useEstate, useEstates } from '../data/useEstates';
 import { estateMedia } from '../data/propertyMedia';
 import { brochureFor } from '../data/media';
 import Seo from '../components/Seo';
+import ResponsiveImage from '../components/ResponsiveImage';
 import NotFound from './NotFound';
 
 export default function EstateDetail() {
@@ -76,19 +77,23 @@ export default function EstateDetail() {
         path={`/estates/${estate.slug}`}
       />
 
-      {/* Landscape hero */}
+      {/* Landscape hero with prioritized image and skeleton shimmer */}
       <section className="relative h-[52vh] w-full overflow-hidden bg-surface md:h-[62vh]">
-        <img
+        <ResponsiveImage
           src={media}
           alt={estate.name}
-          className="absolute inset-0 h-full w-full object-cover object-top"
+          aspectRatio="auto"
+          priority
+          sizes="100vw"
+          containerClassName="absolute inset-0 h-full w-full"
+          className="h-full w-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
 
         <div className="absolute left-4 top-28 sm:left-6 md:left-10 lg:left-14">
           <Link
             to={backTo}
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted transition-colors hover:text-accent"
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white/80 px-3.5 py-2 text-xs uppercase tracking-[0.18em] text-primary shadow-sm backdrop-blur-md transition-colors hover:bg-white hover:text-accent"
           >
             <ArrowLeft className="h-4 w-4" /> Back to listings
           </Link>
@@ -97,17 +102,17 @@ export default function EstateDetail() {
         <div className="absolute right-4 top-28 flex items-center gap-2 sm:right-6 md:right-10 lg:right-14">
           <button
             onClick={handleShare}
-            className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3.5 py-2.5 text-xs text-primary shadow-md backdrop-blur-md transition-colors hover:bg-white"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-white/90 px-4 py-2.5 text-xs text-primary shadow-md backdrop-blur-md transition-colors hover:bg-white active:scale-95"
             title="Share estate"
           >
-            <Share2 className="h-3.5 w-3.5" />
+            <Share2 className="h-4 w-4" />
             {copied ? 'Copied URL!' : 'Share'}
           </button>
           <button
             onClick={() => setExpandedHero(true)}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs text-primary shadow-md transition-colors hover:bg-primary hover:text-white"
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs text-primary shadow-md transition-colors hover:bg-primary hover:text-white active:scale-95"
           >
-            <Maximize2 className="h-3.5 w-3.5" />
+            <Maximize2 className="h-4 w-4" />
             Expand Photo
           </button>
         </div>

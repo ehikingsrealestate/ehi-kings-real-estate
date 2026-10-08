@@ -271,17 +271,17 @@ export default function Book() {
 
                 <div>
                   <label className="text-[0.68rem] uppercase tracking-[0.18em] text-muted">Message</label>
-                  <textarea name="message" rows={5} className="mt-2 w-full resize-none rounded-[1rem] border border-rule bg-bg px-4 py-3 text-primary outline-none focus:border-accent" placeholder="Location, plot size, preferred estate, timing, or any question..." />
+                  <textarea name="message" rows={5} className="mt-2 w-full resize-none rounded-[1rem] border border-rule bg-bg px-4 py-3 text-base text-primary outline-none focus:border-accent" placeholder="Location, plot size, preferred estate, timing, or any question..." />
                 </div>
 
                 <label className="flex items-start gap-3 text-sm text-muted">
-                  <input name="consentMarketing" type="checkbox" className="mt-1 h-4 w-4 accent-[var(--color-accent-2)]" />
+                  <input name="consentMarketing" type="checkbox" className="mt-1 h-5 w-5 accent-[var(--color-accent-2)]" />
                   I agree to receive follow-up property updates and email marketing from {COMPANY.short}.
                 </label>
 
                 {error && <div className="rounded-[1rem] border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-500">{error}</div>}
 
-                <button disabled={busy} type="submit" className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-accent py-4 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90 disabled:opacity-55">
+                <button disabled={busy} type="submit" className="inline-flex min-h-[48px] w-full items-center justify-center gap-3 rounded-full bg-accent py-4 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90 active:scale-[0.98] disabled:opacity-55">
                   {busy ? 'Saving request...' : 'Submit request'} <ArrowRight className="h-4 w-4" />
                 </button>
               </form>
@@ -303,7 +303,7 @@ function Field({ name, label, type = 'text', required, min, defaultValue }: { na
         min={min}
         required={required}
         defaultValue={defaultValue}
-        className="mt-2 w-full rounded-[1rem] border border-rule bg-bg px-4 py-3 text-primary outline-none focus:border-accent"
+        className="mt-2 min-h-[48px] w-full rounded-[1rem] border border-rule bg-bg px-4 py-3 text-base text-primary outline-none focus:border-accent"
       />
     </div>
   );

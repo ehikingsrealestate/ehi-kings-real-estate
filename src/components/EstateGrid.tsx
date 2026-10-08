@@ -4,6 +4,7 @@ import { ArrowUpRight, MapPin, Ruler, ScrollText } from 'lucide-react';
 import type { Estate } from '../data/site';
 import { estateMedia } from '../data/propertyMedia';
 import TiltCard from './reactbits/TiltCard';
+import ResponsiveImage from './ResponsiveImage';
 
 export default function EstateGrid({ estates }: { estates: Estate[] }) {
   return (
@@ -17,7 +18,7 @@ export default function EstateGrid({ estates }: { estates: Estate[] }) {
           transition={{ duration: 0.76, delay: (index % 3) * 0.055, ease: [0.16, 1, 0.3, 1] }}
           className="group min-w-0"
         >
-          <TiltCard className="rounded-[1.25rem]" maxTilt={5}>
+          <TiltCard className="rounded-[1.25rem]" maxTilt={4}>
           <Link
             to={`/estates/${estate.slug}`}
             className="block overflow-hidden rounded-[1.25rem] border border-rule bg-white transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_18px_60px_rgba(0,0,0,0.08)]"
@@ -29,10 +30,12 @@ export default function EstateGrid({ estates }: { estates: Estate[] }) {
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="relative aspect-[4/3] overflow-hidden bg-surface sm:aspect-[16/10]"
             >
-              <img
+              <ResponsiveImage
                 src={estateMedia(estate)}
                 alt={estate.name}
-                loading="lazy"
+                aspectRatio="16/10"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                containerClassName="h-full w-full"
                 className="h-full w-full object-cover object-top transition duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/4 to-black/8" />

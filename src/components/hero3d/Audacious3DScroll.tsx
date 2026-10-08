@@ -18,17 +18,29 @@ export default function Audacious3DScroll({
 
   useEffect(() => {
     if (reduced) return;
-    let raf = 0;
-    const loop = () => {
-      const el = root.current;
-      if (el) {
-        const scrub = Math.max(1, el.offsetHeight - window.innerHeight);
-        progress.set(Math.min(1, Math.max(0, window.scrollY / scrub)));
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const el = root.current;
+          if (el) {
+            const scrub = Math.max(1, el.offsetHeight - window.innerHeight);
+            progress.set(Math.min(1, Math.max(0, window.scrollY / scrub)));
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
-      raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, [progress, reduced]);
 
   const p = useSpring(progress, { stiffness: 120, damping: 32, restDelta: 0.0005 });
@@ -39,13 +51,16 @@ export default function Audacious3DScroll({
   const handoffOpacity = useTransform(p, [0.78, 1], [0, 1]);
 
   return (
-    <section ref={root} data-hero-3d className="relative h-[210vh] text-white">
+    <section ref={root} data-hero-3d className="relative h-[160vh] sm:h-[210vh] text-white">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#07111f]">
         <motion.div style={{ scale: mediaScale, y: mediaY }} className="absolute inset-0">
           {reduced ? (
             <img
               src={image}
               alt="Audacious Hotel Apartments, an Ehi-Kings development"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           ) : (
@@ -57,7 +72,7 @@ export default function Audacious3DScroll({
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               aria-label="Audacious Hotel Apartments scroll video"
             />
           )}

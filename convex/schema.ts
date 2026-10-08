@@ -143,7 +143,9 @@ export default defineSchema({
     active: v.boolean(),
     updatedById: v.optional(v.id("users")),
     updatedAt: v.optional(v.number()),
-  }).index("by_slug", ["slug"]),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_active", ["active"]),
 
   channels: defineTable({
     name: v.string(),

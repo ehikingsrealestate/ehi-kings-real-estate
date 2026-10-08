@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Maximize2, Download, X, FileText, CheckCircle2, Sparkles, Filter } from 'lucide-react';
 import { OFFERS, MARKETING_COMPILATION_FLIER, type Offer } from '../data/media';
+import ResponsiveImage from './ResponsiveImage';
 
 export default function CurrentOffers() {
   const [activeFilter, setActiveFilter] = useState<'all' | 'available' | 'sold-out' | 'Lagos' | 'Epe' | 'Benin' | 'Abuja'>('all');
@@ -39,7 +40,7 @@ export default function CurrentOffers() {
           target="_blank"
           rel="noopener noreferrer"
           download="Ehi-Kings-2026-Marketing-Portfolio.png"
-          className="group flex items-center gap-4 rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/5 via-transparent to-accent-2/5 p-4 transition duration-300 hover:border-accent hover:shadow-lg lg:max-w-sm"
+          className="group flex min-h-[48px] items-center gap-4 rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/5 via-transparent to-accent-2/5 p-4 transition duration-300 hover:border-accent hover:shadow-lg lg:max-w-sm"
         >
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-ink shadow-md transition-transform group-hover:scale-105">
             <FileText className="h-6 w-6" />
@@ -70,7 +71,7 @@ export default function CurrentOffers() {
           <button
             key={tab.id}
             onClick={() => setActiveFilter(tab.id as typeof activeFilter)}
-            className={`min-h-9 rounded-full px-4 py-2 text-xs font-medium transition duration-300 active:scale-95 ${
+            className={`min-h-[44px] rounded-full px-4 py-2.5 text-xs font-medium transition duration-300 active:scale-95 ${
               activeFilter === tab.id
                 ? 'bg-primary text-white shadow-md'
                 : 'bg-surface text-muted hover:bg-rule hover:text-primary'
@@ -90,10 +91,11 @@ export default function CurrentOffers() {
           >
             {/* Flyer Image Container with Lightbox Trigger */}
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-primary">
-              <img
+              <ResponsiveImage
                 src={offer.flyer}
                 alt={`${offer.name} — 2026 offer flyer`}
-                loading="lazy"
+                aspectRatio="auto"
+                containerClassName="h-full w-full"
                 className="h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-60" />
@@ -121,7 +123,7 @@ export default function CurrentOffers() {
               {/* Quick View Button */}
               <button
                 onClick={() => setSelectedFlyer(offer)}
-                className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 hover:bg-white"
+                className="absolute right-3 top-3 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-primary shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 hover:bg-white"
                 title="Expand Flyer"
                 aria-label={`Expand flyer for ${offer.name}`}
               >

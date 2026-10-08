@@ -28,5 +28,7 @@ export function useEstates(): Estate[] {
 
 export function useEstate(slug: string | undefined): Estate | undefined {
   const all = useEstates();
+  const directRow = useQuery(api.properties.getBySlug, slug ? { slug } : 'skip') as Row | null | undefined;
+  if (directRow) return toEstate(directRow);
   return slug ? all.find((e) => e.slug === slug) : undefined;
 }

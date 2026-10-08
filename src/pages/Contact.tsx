@@ -194,7 +194,7 @@ export default function Contact() {
                       type={f.type}
                       required
                       placeholder={f.ph}
-                      className="rounded-[0.9rem] border border-rule bg-surface px-4 py-3 text-primary transition-colors placeholder:text-muted/60 focus:border-accent-2 focus:outline-none"
+                      className="min-h-[48px] rounded-[0.9rem] border border-rule bg-surface px-4 py-3 text-base text-primary transition-colors placeholder:text-muted/60 focus:border-accent-2 focus:outline-none"
                     />
                   </div>
                 ))}
@@ -207,11 +207,11 @@ export default function Contact() {
                     name="message"
                     rows={4}
                     placeholder="Budget, preferred location, land or finished home…"
-                    className="resize-none rounded-[0.9rem] border border-rule bg-surface px-4 py-3 text-primary transition-colors placeholder:text-muted/60 focus:border-accent-2 focus:outline-none"
+                    className="rounded-[0.9rem] border border-rule bg-surface px-4 py-3 text-base text-primary transition-colors placeholder:text-muted/60 focus:border-accent-2 focus:outline-none"
                   />
                 </div>
                 <label className="flex items-start gap-3 text-sm leading-6 text-muted">
-                  <input name="consentMarketing" type="checkbox" className="mt-1 h-4 w-4 accent-[var(--color-accent-2)]" />
+                  <input name="consentMarketing" type="checkbox" className="mt-1 h-5 w-5 accent-[var(--color-accent-2)]" />
                   Send me helpful Ehi-Kings property updates by email.
                 </label>
                 {error && <div className="rounded-[0.9rem] border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-500">{error}</div>}
@@ -219,7 +219,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={busy}
-                    className="w-full rounded-full bg-accent-2 py-4 text-xs font-medium uppercase tracking-[0.2em] text-accent-2-ink transition-colors hover:bg-accent hover:text-accent-ink"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-accent-2 py-4 text-xs font-medium uppercase tracking-[0.2em] text-accent-2-ink transition-colors hover:bg-accent hover:text-accent-ink active:scale-[0.98]"
                   >
                     {busy ? 'Sending...' : 'Send message'}
                   </button>

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, Filter, Search } from 'lucide-react';
+import { ArrowRight, ChevronDown, Filter, Search } from 'lucide-react';
 import { COMPANY } from '../data/site';
 import { useEstates } from '../data/useEstates';
 import EstateGrid from '../components/EstateGrid';
@@ -11,10 +11,13 @@ import Seo from '../components/Seo';
 
 type KindFilter = 'all' | 'land' | 'home';
 
+const PAGE_SIZE = 9;
+
 export default function Properties() {
   const estates = useEstates();
   const [params, setParams] = useSearchParams();
   const [search, setSearch] = useState('');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const kind = (params.get('kind') || 'all') as KindFilter;
   const region = params.get('region') || 'all';
 
@@ -44,7 +47,14 @@ export default function Properties() {
     });
   }, [estates, kind, region, search]);
 
+  const pagedEstates = useMemo(() => {
+    return filtered.slice(0, visibleCount);
+  }, [filtered, visibleCount]);
+
+  const hasMore = visibleCount < filtered.length;
+
   const setFilter = (next: { kind?: KindFilter; region?: string }) => {
+    setVisibleCount(PAGE_SIZE);
     const nextParams = new URLSearchParams(params);
     const nextKind = next.kind ?? kind;
     const nextRegion = next.region ?? region;
@@ -86,13 +96,16 @@ export default function Properties() {
         <Reveal>
           <section className="rounded-[1.5rem] bg-white p-6 shadow-[0_30px_90px_rgba(0,0,0,0.05)] sm:p-8 md:p-10">
             <div className="grid gap-4 border-b border-rule pb-6 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div className="flex min-w-0 items-center gap-3 rounded-[1.25rem] border border-accent-2/20 bg-surface px-4 py-4 sm:rounded-full sm:px-5">
-                <Search className="h-4 w-4 shrink-0 text-accent-2" />
+              <div className="flex min-h-[48px] min-w-0 items-center gap-3 rounded-[1.25rem] border border-accent-2/20 bg-surface px-4 py-3 sm:rounded-full sm:px-5">
+                <Search className="h-5 w-5 shrink-0 text-accent-2" />
                 <input
                   value={search}
-                  onChange={(event) => setSearch(event.target.value)}
+                  onChange={(event) => {
+                    setSearch(event.target.value);
+                    setVisibleCount(PAGE_SIZE);
+                  }}
                   placeholder="Search by estate, location, title, or price"
-                  className="min-w-0 flex-1 bg-transparent text-sm text-primary outline-none placeholder:text-muted"
+                  className="min-w-0 flex-1 bg-transparent text-base text-primary outline-none placeholder:text-muted"
                 />
               </div>
 
@@ -101,7 +114,7 @@ export default function Properties() {
                   <button
                     key={item}
                     onClick={() => setFilter({ kind: item })}
-                    className={`min-h-11 rounded-full px-4 py-3 text-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98] sm:px-5 ${
+                    className={`min-h-[48px] min-w-[48px] rounded-full px-5 py-3 text-sm font-medium transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98] ${
                       kind === item
                         ? item === 'land' ? 'bg-accent-2 text-accent-2-ink shadow-[0_14px_30px_rgba(110,140,20,0.18)]' : 'bg-accent text-accent-ink shadow-[0_14px_30px_rgba(0,99,222,0.16)]'
                         : 'bg-surface text-primary hover:bg-accent-2 hover:text-accent-2-ink'
@@ -118,12 +131,12 @@ export default function Properties() {
                 <Filter className="h-4 w-4 text-accent" />
                 Region
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-1">
+              <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [-webkit-overflow-scrolling:touch]">
                 {regions.map((item) => (
                   <button
                     key={item}
                     onClick={() => setFilter({ region: item })}
-                    className={`min-h-11 shrink-0 rounded-full px-5 py-3 text-sm transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98] ${
+                    className={`min-h-[48px] min-w-[48px] shrink-0 rounded-full px-5 py-3 text-sm font-medium transition duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.98] ${
                       region === item
                         ? item === 'all' ? 'bg-accent text-accent-ink shadow-[0_14px_30px_rgba(0,99,222,0.16)]' : 'bg-accent-2 text-accent-2-ink shadow-[0_14px_30px_rgba(110,140,20,0.18)]'
                         : 'bg-surface text-primary hover:bg-accent-2 hover:text-accent-2-ink'
@@ -136,8 +149,22 @@ export default function Properties() {
             </div>
 
             <div className="mt-8">
-              {filtered.length > 0 ? (
-                <EstateGrid estates={filtered} />
+              {pagedEstates.length > 0 ? (
+                <>
+                  <EstateGrid estates={pagedEstates} />
+                  {hasMore && (
+                    <div className="mt-10 flex justify-center border-t border-rule/60 pt-8">
+                      <button
+                        type="button"
+                        onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                        className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-primary/25 bg-white px-8 py-3.5 text-sm font-medium text-primary shadow-sm transition hover:border-primary hover:bg-primary hover:text-white active:scale-95"
+                      >
+                        Load more properties ({filtered.length - visibleCount} remaining)
+                        <ChevronDown className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="rounded-[1.5rem] border border-rule bg-surface p-8 text-center sm:p-10">
                   <h2 className="font-heading text-3xl font-light tracking-normal">No matching public listing.</h2>
@@ -146,7 +173,7 @@ export default function Properties() {
                   </p>
                   <Link
                     to="/contact"
-                    className="mt-6 inline-flex items-center gap-3 rounded-full bg-accent-2 px-6 py-3 text-sm font-medium text-accent-2-ink transition-colors hover:bg-accent hover:text-accent-ink"
+                    className="mt-6 inline-flex min-h-[48px] items-center gap-3 rounded-full bg-accent-2 px-6 py-3 text-sm font-medium text-accent-2-ink transition-colors hover:bg-accent hover:text-accent-ink"
                   >
                     Contact {COMPANY.short}
                     <ArrowRight className="h-4 w-4" />
