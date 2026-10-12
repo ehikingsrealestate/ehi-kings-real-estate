@@ -9,6 +9,8 @@ type Row = {
   note?: string; overview: string[]; features: string[]; img?: string;
   priceTiers?: { label: string; price: string; note?: string }[];
   featured?: boolean; order: number;
+
+  youtubeId?: string; youtubeUrl?: string; videoTitle?: string;
 };
 
 const toEstate = (r: Row): Estate => ({
@@ -16,6 +18,9 @@ const toEstate = (r: Row): Estate => ({
   kind: r.kind, title: r.title, size: r.size, price: r.price,
   note: r.note, overview: r.overview, features: r.features, img: r.img,
   priceTiers: r.priceTiers,
+  youtubeId: r.youtubeId || ESTATES.find((e) => e.slug === r.slug)?.youtubeId,
+  youtubeUrl: r.youtubeUrl || ESTATES.find((e) => e.slug === r.slug)?.youtubeUrl,
+  videoTitle: r.videoTitle || ESTATES.find((e) => e.slug === r.slug)?.videoTitle,
 });
 
 // Live listings from Convex (what admins edit). Falls back to the static

@@ -93,6 +93,8 @@ export type Offer = {
   deposit?: string;
   status?: 'available' | 'almost-sold-out' | 'sold-out';
   ambassadors?: string[];
+  youtubeId?: string;
+  videoTitle?: string;
 };
 
 export const OFFERS: Offer[] = [
@@ -107,6 +109,8 @@ export const OFFERS: Offer[] = [
     titleType: "Governor's Consent",
     deposit: '₦20M initial deposit',
     status: 'almost-sold-out',
+    youtubeId: 'TwHzSe0iN8I',
+    videoTitle: 'Grace Apartments Lekki — Luxury Residential & Shortlet Tour',
   },
   {
     slug: 'grace-villa-estate',
@@ -119,6 +123,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Certificate of Occupancy (C of O)',
     size: '450 SQM',
     status: 'available',
+    youtubeId: 'WGfh386fsF8',
+    videoTitle: 'Grace Villa Update with Executive Director Bethel Ehikioya',
     ambassadors: ['Nosa Rex', 'Nuella'],
   },
   {
@@ -133,6 +139,8 @@ export const OFFERS: Offer[] = [
     size: '500 SQM',
     deposit: '₦30.5M on 6-month plan',
     status: 'available',
+    youtubeId: 'u6Ad69crAPs',
+    videoTitle: 'Grace Luxury Homes & Developments Walkthrough',
     ambassadors: ['Nosa Rex', 'Nuella Njubigbo'],
   },
   {
@@ -147,6 +155,8 @@ export const OFFERS: Offer[] = [
     size: '600 SQM',
     deposit: '₦15.5M on 6-month plan',
     status: 'available',
+    youtubeId: 'J_ex1u2HBlE',
+    videoTitle: 'Epe Corridor Tour & Grace Court Estate Overview',
     ambassadors: ['Nosa Rex', 'Nuella'],
   },
   {
@@ -161,6 +171,8 @@ export const OFFERS: Offer[] = [
     size: '600 SQM',
     deposit: '30% initial deposit',
     status: 'available',
+    youtubeId: 'ARMM9mMR9jA',
+    videoTitle: '95 Plots Allocated: Perfect Gardens Estate Phase 1 Aborije',
     ambassadors: ['Nosa Rex', 'Nuella'],
   },
   {
@@ -175,6 +187,8 @@ export const OFFERS: Offer[] = [
     size: '300 & 550 SQM',
     deposit: '₦500k deposit on 6-month plan',
     status: 'available',
+    youtubeId: 'YTyBncuM2Ag',
+    videoTitle: 'Charis Garden Estate Imagbon Epe Site Tour & Inspection',
     ambassadors: ['Nosa Rex', 'Nuella Njubigbo'],
   },
   {
@@ -189,6 +203,8 @@ export const OFFERS: Offer[] = [
     size: '500 SQM & 5-Bed Duplex',
     deposit: '₦10M initial deposit',
     status: 'available',
+    youtubeId: 'WK_lyjJgRdg',
+    videoTitle: 'Perfect Garden Estate Homes Abuja Video Walkthrough',
     ambassadors: ['Nosa Rex', 'Nuella'],
   },
   {
@@ -203,6 +219,8 @@ export const OFFERS: Offer[] = [
     size: '440 SQM',
     deposit: '₦5M initial deposit',
     status: 'available',
+    youtubeId: 'SSP3mjJ3I2U',
+    videoTitle: 'Perfect Garden Estate Benin City Inspection Tour',
     ambassadors: ['Nosa Rex', 'Nuella'],
   },
   {
@@ -216,6 +234,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Registered Survey',
     size: '50×100 ft & 100×100 ft',
     status: 'available',
+    youtubeId: 'PV1oHM0A8QY',
+    videoTitle: 'Shalom Garden City Benin Official Launch & Progress',
     ambassadors: ['MC Allamano', 'Nosa Rex'],
   },
   {
@@ -229,6 +249,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Certificate of Occupancy',
     size: '5-Bedroom Duplex + BQ',
     status: 'sold-out',
+    youtubeId: 'qzWb_k9Jzeo',
+    videoTitle: 'Grace Luxury Construction With The GM',
     ambassadors: ['Nosa Rex'],
   },
   {
@@ -242,6 +264,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Survey Plan',
     size: '600 SQM',
     status: 'sold-out',
+    youtubeId: 't5l0FSrw56Y',
+    videoTitle: 'How to Invest Wisely in Real Estate - Ehi-Kings',
     ambassadors: ['Nosa Rex', 'Nuella Njubigbo'],
   },
   {
@@ -255,6 +279,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Registered Survey',
     size: '600 SQM',
     status: 'sold-out',
+    youtubeId: '0_RO3mfZx20',
+    videoTitle: 'Gold & Silver Phase 1 & 2 Video Tour',
   },
   {
     slug: 'gold-silver-garden-phase-2',
@@ -267,6 +293,8 @@ export const OFFERS: Offer[] = [
     titleType: 'Registered Survey (Excision in Process)',
     size: '600 SQM',
     status: 'sold-out',
+    youtubeId: '0_RO3mfZx20',
+    videoTitle: 'Gold & Silver Phase 2 Ibeju-Lekki Inspection',
   },
 ];
 

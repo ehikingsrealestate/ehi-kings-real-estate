@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Maximize2, Download, X, FileText, CheckCircle2, Sparkles, Filter } from 'lucide-react';
+import { ArrowUpRight, Maximize2, Download, X, FileText, CheckCircle2, Sparkles, Filter, Play } from 'lucide-react';
 import { OFFERS, MARKETING_COMPILATION_FLIER, type Offer } from '../data/media';
 import ResponsiveImage from './ResponsiveImage';
 
@@ -89,19 +89,23 @@ export default function CurrentOffers() {
             key={offer.slug}
             className="group flex flex-col overflow-hidden rounded-[1.25rem] border border-rule bg-surface transition duration-500 hover:border-accent/40 hover:shadow-xl"
           >
-            {/* Flyer Image Container with Lightbox Trigger */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden bg-primary">
+            {/* Flyer Image Container linking to the estate page */}
+            <Link
+              to={`/estates/${offer.slug}?view=video#estate-video`}
+              className="group/flyer relative aspect-[4/5] w-full overflow-hidden bg-primary block cursor-pointer"
+              title={`View ${offer.name} property details & YouTube video tour`}
+            >
               <ResponsiveImage
                 src={offer.flyer}
                 alt={`${offer.name} — 2026 offer flyer`}
                 aspectRatio="auto"
                 containerClassName="h-full w-full"
-                className="h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                className="h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/flyer:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity group-hover/flyer:opacity-60" />
 
               {/* Status & Title Badges */}
-              <div className="absolute left-3 top-3 flex flex-wrap items-center gap-1.5">
+              <div className="absolute left-3 top-3 flex flex-wrap items-center gap-1.5 z-10">
                 <span className="rounded-full bg-black/60 px-3 py-1 text-[0.7rem] font-medium text-white backdrop-blur-md">
                   {offer.region}
                 </span>
@@ -118,17 +122,34 @@ export default function CurrentOffers() {
                     Now Selling
                   </span>
                 )}
+                {offer.youtubeId && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-red-600/90 px-2.5 py-1 text-[0.68rem] font-semibold tracking-wider text-white shadow-md backdrop-blur-md">
+                    <Play className="h-2.5 w-2.5 fill-current" /> Video Tour
+                  </span>
+                )}
               </div>
 
-              {/* Quick View Button */}
+              {/* Quick View Button (stopPropagation to open lightbox if clicked) */}
               <button
-                onClick={() => setSelectedFlyer(offer)}
-                className="absolute right-3 top-3 flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/90 text-primary shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 hover:bg-white"
-                title="Expand Flyer"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelectedFlyer(offer);
+                }}
+                className="absolute right-3 top-3 z-10 flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-full bg-white/90 text-primary shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 hover:bg-white"
+                title="Expand Full Flyer"
                 aria-label={`Expand flyer for ${offer.name}`}
               >
                 <Maximize2 className="h-4 w-4" />
               </button>
+
+              {/* Hover Center Indicator */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/flyer:opacity-100 pointer-events-none">
+                <span className="inline-flex items-center gap-2 rounded-full bg-primary/95 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md shadow-2xl border border-white/20">
+                  <Play className="h-3.5 w-3.5 fill-red-500 text-red-500" /> Watch Video Tour & Details
+                </span>
+              </div>
 
               {/* Bottom Overlaid Details */}
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
@@ -145,7 +166,7 @@ export default function CurrentOffers() {
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Description & Action Links */}
             <div className="flex flex-1 flex-col p-5">
@@ -173,10 +194,18 @@ export default function CurrentOffers() {
                 </button>
 
                 <Link
-                  to={`/estates/${offer.slug}`}
+                  to={`/estates/${offer.slug}?view=video#estate-video`}
                   className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-accent transition-transform hover:translate-x-0.5"
                 >
-                  Estate details <ArrowUpRight className="h-3.5 w-3.5" />
+                  {offer.youtubeId ? (
+                    <>
+                      <Play className="h-3 w-3 fill-current text-red-600" />
+                      <span>Video & Details</span>
+                    </>
+                  ) : (
+                    <span>Estate details</span>
+                  )}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>
@@ -234,10 +263,10 @@ export default function CurrentOffers() {
               {/* Bottom Quick Action */}
               <div className="mt-3 flex w-full items-center justify-between">
                 <Link
-                  to={`/estates/${selectedFlyer.slug}`}
-                  className="text-xs text-white/80 underline-offset-4 hover:underline"
+                  to={`/estates/${selectedFlyer.slug}?view=video#estate-video`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-medium text-white transition hover:bg-white hover:text-primary"
                 >
-                  Go to {selectedFlyer.name} listing →
+                  <Play className="h-3.5 w-3.5 fill-red-500 text-red-500" /> Watch YouTube Video Tour for {selectedFlyer.name} →
                 </Link>
                 <Link
                   to={`/book?type=inspection&property=${selectedFlyer.slug}`}

@@ -105,6 +105,9 @@ export type Estate = {
   soldOut?: boolean;
   almostSoldOut?: boolean;
   ambassadors?: string[];
+  youtubeId?: string;
+  youtubeUrl?: string;
+  videoTitle?: string;
 };
 
 export const ESTATES: Estate[] = [
@@ -133,6 +136,9 @@ export const ESTATES: Estate[] = [
       "Modern, high-specification finishing & high ROI",
       "₦20M deposit · balance over 12 months",
     ],
+    youtubeId: "TwHzSe0iN8I",
+    youtubeUrl: "https://www.youtube.com/watch?v=TwHzSe0iN8I",
+    videoTitle: "Grace Apartments Lekki — Luxury Residential & Shortlet Tour",
   },
   {
     slug: "grace-villa-estate",
@@ -159,6 +165,9 @@ export const ESTATES: Estate[] = [
       "Behind Greenspring School, Awoyaya",
       "Settled, family-oriented neighbourhood",
     ],
+    youtubeId: "WGfh386fsF8",
+    youtubeUrl: "https://www.youtube.com/watch?v=WGfh386fsF8",
+    videoTitle: "Grace Villa Update with Executive Director Bethel Ehikioya",
   },
   {
     slug: "grace-life-garden-estate",
@@ -186,6 +195,9 @@ export const ESTATES: Estate[] = [
       "Near Greenspring School, Corona School & Novare Mall",
       "Outright ₦30M · ₦30.5M on 6-month installment",
     ],
+    youtubeId: "u6Ad69crAPs",
+    youtubeUrl: "https://www.youtube.com/watch?v=u6Ad69crAPs",
+    videoTitle: "Grace Luxury Homes & Developments Walkthrough",
   },
   {
     slug: "grace-court-estate-epe",
@@ -213,6 +225,9 @@ export const ESTATES: Estate[] = [
       "Outright ₦15M · ₦15.5M on 6 months plan",
       "Rapidly developing university neighbourhood",
     ],
+    youtubeId: "J_ex1u2HBlE",
+    youtubeUrl: "https://www.youtube.com/watch?v=J_ex1u2HBlE",
+    videoTitle: "Epe Corridor Tour & Grace Court Estate Overview",
   },
   {
     slug: "perfect-garden-estate-epe",
@@ -241,6 +256,9 @@ export const ESTATES: Estate[] = [
       "Epe growth district",
       "30% initial deposit with plans up to 6 months",
     ],
+    youtubeId: "ARMM9mMR9jA",
+    youtubeUrl: "https://www.youtube.com/watch?v=ARMM9mMR9jA",
+    videoTitle: "95 Plots Allocated: Perfect Gardens Estate Phase 1 Aborije",
   },
   {
     slug: "charis-garden-estate",
@@ -270,6 +288,9 @@ export const ESTATES: Estate[] = [
       "Imagbon, Epe – Ijebu Ode axis",
       "Accessible entry point for early land ownership",
     ],
+    youtubeId: "YTyBncuM2Ag",
+    youtubeUrl: "https://www.youtube.com/watch?v=YTyBncuM2Ag",
+    videoTitle: "Charis Garden Estate Imagbon Epe Site Tour & Inspection",
   },
   {
     slug: "perfect-garden-homes-abuja",
@@ -297,6 +318,9 @@ export const ESTATES: Estate[] = [
       "Airport Road, Lugbe (near Shoprite & Dunamis Church)",
       "₦10M deposit on duplex · 1-year payment spread",
     ],
+    youtubeId: "WK_lyjJgRdg",
+    youtubeUrl: "https://www.youtube.com/watch?v=WK_lyjJgRdg",
+    videoTitle: "Perfect Garden Estate Homes Abuja Video Walkthrough",
   },
   {
     slug: "perfect-garden-estate-benin",
@@ -323,6 +347,9 @@ export const ESTATES: Estate[] = [
       "440 SQM 100% dry, buildable land",
       "Gated estate with 24hrs light & security",
     ],
+    youtubeId: "SSP3mjJ3I2U",
+    youtubeUrl: "https://www.youtube.com/watch?v=SSP3mjJ3I2U",
+    videoTitle: "Perfect Garden Estate Benin City Inspection Tour",
   },
   {
     slug: "shalom-garden-city-benin",
@@ -352,6 +379,9 @@ export const ESTATES: Estate[] = [
       "Upper Ekehuan Road / Airport Road, Benin City",
       "High growth appreciation corridor",
     ],
+    youtubeId: "PV1oHM0A8QY",
+    youtubeUrl: "https://www.youtube.com/watch?v=PV1oHM0A8QY",
+    videoTitle: "Shalom Garden City Benin Official Launch & Progress",
   },
   {
     slug: "audacious-hotel-apartments",
@@ -374,6 +404,9 @@ export const ESTATES: Estate[] = [
       "Strong short-let rental potential",
       "Move-in ready",
     ],
+    youtubeId: "qzWb_k9Jzeo",
+    youtubeUrl: "https://www.youtube.com/watch?v=qzWb_k9Jzeo",
+    videoTitle: "Grace Luxury & Audacious Development Update",
   },
   {
     slug: "grace-luxury-homes-phase-2",
@@ -402,6 +435,9 @@ export const ESTATES: Estate[] = [
       "24hrs electricity, clean water, gated security",
       "Sold Out — delivered standard",
     ],
+    youtubeId: "qzWb_k9Jzeo",
+    youtubeUrl: "https://www.youtube.com/watch?v=qzWb_k9Jzeo",
+    videoTitle: "Grace Luxury Construction With The GM",
   },
   {
     slug: "open-gate-royal-garden-phase-1",
@@ -426,6 +462,9 @@ export const ESTATES: Estate[] = [
       "Otorlu-Ilagbo, Ibeju-Lekki growth corridor",
       "Sold Out — physical allocations completed",
     ],
+    youtubeId: "t5l0FSrw56Y",
+    youtubeUrl: "https://www.youtube.com/watch?v=t5l0FSrw56Y",
+    videoTitle: "How to Invest Wisely in Real Estate - Ehi-Kings",
   },
   {
     slug: "gold-silver-garden",
@@ -449,6 +488,9 @@ export const ESTATES: Estate[] = [
       "Generous 600 SQM standard plot size",
       "Close to the Dangote Refinery & deep-sea port",
     ],
+    youtubeId: "0_RO3mfZx20",
+    youtubeUrl: "https://www.youtube.com/watch?v=0_RO3mfZx20",
+    videoTitle: "Gold & Silver Phase 1 & 2 Video Tour",
   },
   {
     slug: "gold-silver-garden-phase-2",
@@ -472,6 +514,9 @@ export const ESTATES: Estate[] = [
       "Akpakin, Ibeju-Lekki Free Trade Zone corridor",
       "Sold Out",
     ],
+    youtubeId: "0_RO3mfZx20",
+    youtubeUrl: "https://www.youtube.com/watch?v=0_RO3mfZx20",
+    videoTitle: "Gold & Silver Phase 2 Ibeju-Lekki Inspection",
   },
 ];
 

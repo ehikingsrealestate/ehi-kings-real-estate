@@ -1,8 +1,8 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
-  ArrowLeft,
+import { ArrowLeft,
   MapPin,
   Ruler,
   ScrollText,
@@ -15,8 +15,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Users,
-  Share2,
-} from 'lucide-react';
+  Share2, Youtube, Play, ExternalLink } from 'lucide-react';
 import { useEstate, useEstates } from '../data/useEstates';
 import { estateMedia } from '../data/propertyMedia';
 import { brochureFor } from '../data/media';
