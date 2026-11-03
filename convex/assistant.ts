@@ -327,7 +327,7 @@ export const publicAsk = action({
               "Philosophy: Turning dreams into homes, and homes into legacies.",
               "Office: Ehi-Kings Real Estate Close, adjacent Jakande ShopRite (Triangle Mall), Lekki-Epe Expressway, Lagos.",
               "Email: info@ehikings.com",
-              "Phones: +234 810 922 7485, +234 906 115 4872, +234 907 376 5081",
+              "Phones: +234 907 376 5081, +234 906 115 4872",
               "",
               `Public listings:\n${propertyLines}`,
               "",

@@ -69,7 +69,7 @@ export default function Contact() {
     <div className="px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32 md:px-10 md:pb-24 md:pt-40">
       <Seo
         title="Contact Ehi-Kings — Talk to a Senior Property Agent"
-        description="Tell Ehi-Kings what you're looking for. Connect directly via WhatsApp (+234 810 922 7485), Customer Care (+234 906 115 4872), or Marketing & Sales (+234 907 376 5081)."
+        description="Tell Ehi-Kings what you're looking for. Connect directly via WhatsApp (+234 907 376 5081), Customer Care (+234 906 115 4872), or Marketing & Sales (+234 907 376 5081)."
         path="/contact"
       />
       <div className="mx-auto max-w-6xl">
@@ -94,7 +94,7 @@ export default function Contact() {
               <div className="flex flex-col gap-3">
                 {COMPANY.contactChannels.map((c) => (
                   <a
-                    key={c.number}
+                    key={c.department}
                     href={c.href}
                     target={c.type === 'whatsapp' ? '_blank' : undefined}
                     rel={c.type === 'whatsapp' ? 'noopener noreferrer' : undefined}

@@ -15,17 +15,17 @@ export const COMPANY = {
   address:
     "Ehi-Kings Real Estate Close, adjacent Jakande ShopRite (Triangle Mall), Lekki-Epe Expressway, Lagos.",
   email: "info@ehikings.com",
-  phones: ["+234 810 922 7485", "+234 906 115 4872", "+234 907 376 5081"],
-  whatsapp: "+234 810 922 7485",
-  whatsappRaw: "2348109227485",
-  whatsappUrl: "https://wa.me/2348109227485",
+  phones: ["+234 907 376 5081", "+234 906 115 4872"],
+  whatsapp: "+234 907 376 5081",
+  whatsappRaw: "2349073765081",
+  whatsappUrl: "https://wa.me/2349073765081",
   customerCare: "+234 906 115 4872",
   marketingSales: "+234 907 376 5081",
   contactChannels: [
     {
       department: "WhatsApp Contact",
-      number: "+234 810 922 7485",
-      href: "https://wa.me/2348109227485",
+      number: "+234 907 376 5081",
+      href: "https://wa.me/2349073765081",
       description: "Chat directly with a senior agent on WhatsApp",
       type: "whatsapp" as const,
     },

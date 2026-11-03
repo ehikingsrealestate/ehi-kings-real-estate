@@ -114,7 +114,7 @@ export default function RealtorIncentives() {
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <a
-                href={`https://wa.me/2348109227485?text=Hello%20Ehi-Kings,%20I%20want%20to%20register%20as%20a%20Realtor%20and%20access%20the%202026%20incentive%20package.`}
+                href={`https://wa.me/2349073765081?text=Hello%20Ehi-Kings,%20I%20want%20to%20register%20as%20a%20Realtor%20and%20access%20the%202026%20incentive%20package.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-emerald-600"
