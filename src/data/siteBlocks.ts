@@ -107,6 +107,46 @@ export const DEFAULT_SITE_BLOCKS: SiteBlock[] = [
   },
 ];
 
+export const WEEKLY_SPOTLIGHT_SITE_BLOCKS: SiteBlock[] = [
+  {
+    key: 'home.weekly.badge',
+    label: 'Weekly spotlight badge',
+    type: 'text',
+    value: 'Weekly Spotlight · Q4 Edition',
+    area: 'Weekly spotlight',
+  },
+  {
+    key: 'home.weekly.title',
+    label: 'Weekly spotlight headline',
+    type: 'textarea',
+    value: "Q4 Is Closing, But Your Real Estate Portfolio Shouldn't Sleep.",
+    area: 'Weekly spotlight',
+  },
+  {
+    key: 'home.weekly.subtitle',
+    label: 'Weekly spotlight sub-headline',
+    type: 'text',
+    value: 'Secure Your Future. Verify Your Land. Build Your Legacy.',
+    area: 'Weekly spotlight',
+  },
+  {
+    key: 'home.weekly.body',
+    label: 'Weekly spotlight description',
+    type: 'textarea',
+    value: 'Lock down your site inspection schedule for this week. Whether you are securing titled land or a luxury finished home across Lagos, Epe, Abuja, or Benin City, our senior advisors are ready to walk you through verified documentation and allocation.',
+    area: 'Weekly spotlight',
+  },
+  {
+    key: 'home.weekly.media',
+    label: 'Weekly spotlight media path',
+    type: 'image',
+    value: '/2026 flyers & designs/Q 4 animated.mp4',
+    area: 'Weekly spotlight',
+  },
+];
+
+DEFAULT_SITE_BLOCKS.push(...WEEKLY_SPOTLIGHT_SITE_BLOCKS);
+
 export function defaultBlockMap() {
   return new Map(DEFAULT_SITE_BLOCKS.map((block) => [block.key, block]));
 }

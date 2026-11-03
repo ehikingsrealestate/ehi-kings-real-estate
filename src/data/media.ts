@@ -55,6 +55,53 @@ export const ALLOCATIONS: Allocation[] = [
 export const MARKETING_COMPILATION_FLIER = '/2026 flyers & designs/Complete Marketing, 2026 Flier.png';
 export const REALTOR_INCENTIVE_FLIER = '/2026 flyers & designs/Realtor Incentive, 2026  flier.png';
 
+// Weekly Spotlight / Weekly Campaign Update — update this object each week
+// when uploading a new animated design or flyer to `public/2026 flyers & designs/`.
+export type WeeklySpotlightItem = {
+  id: string;
+  weekLabel: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  ctaText: string;
+  mediaUrl: string;
+  mediaType: 'video' | 'image';
+  downloadName: string;
+  whatsappPrompt: string;
+  pillars: { title: string; detail: string }[];
+};
+
+export const WEEKLY_SPOTLIGHT: WeeklySpotlightItem = {
+  id: 'q4-closing-2026',
+  weekLabel: 'Weekly Spotlight · Q4 Edition',
+  badge: 'Updated Weekly',
+  title: "Q4 Is Closing, But Your Real Estate Portfolio Shouldn't Sleep.",
+  subtitle: 'Secure Your Future. Verify Your Land. Build Your Legacy.',
+  description:
+    'Lock down your site inspection schedule for this week. Whether you are securing titled land or a luxury finished home across Lagos, Epe, Abuja, or Benin City, our senior advisors are ready to walk you through verified documentation and allocation.',
+  ctaText: 'Send Us a DM to Lock Down Your Inspection Schedule for This Week',
+  mediaUrl: '/2026 flyers & designs/Q 4 animated.mp4',
+  mediaType: 'video',
+  downloadName: 'Ehi-Kings-Q4-Animated-Weekly-Spotlight.mp4',
+  whatsappPrompt:
+    "Hello Ehi-Kings! I saw this week's Q4 Spotlight and want to lock down my site inspection schedule for this week.",
+  pillars: [
+    {
+      title: 'Secure Your Future',
+      detail: 'Position early in high-growth corridors before year-end portfolio reviews and price adjustments.',
+    },
+    {
+      title: 'Verify Your Land',
+      detail: "Inspect physical boundaries and confirm C of O, Governor's Consent, R of O, and Registered Survey titles.",
+    },
+    {
+      title: 'Build Your Legacy',
+      detail: 'Transition seamlessly from plot allocation to architectural design and ground-up construction with one team.',
+    },
+  ],
+};
+
 // Structured Realtor Incentive Package dataset
 export type RealtorIncentive = {
   salesTarget: string;
